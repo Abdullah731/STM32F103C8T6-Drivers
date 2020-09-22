@@ -28,7 +28,11 @@ typedef struct
 	volatile u32	I2SPR		;
 }SPI_Registers_t;
 
-#define MSPI		((volatile SPI_Registers_t *)0x40013000)
+#define MSPI1		((volatile SPI_Registers_t *)0x40013000)
+
+#define	SPI_INTERRUPT_DISABLE		0
+#define	SPI_INTERRUPT_ENABLE		1
+
 
 
 #endif

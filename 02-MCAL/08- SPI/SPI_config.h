@@ -14,5 +14,8 @@
 #ifndef	SPI_CONFIG_H
 #define	SPI_CONFIG_H
 
+#define MSPI1_SLAVE_PIN		(GPIOA,PIN0)
+
+#define SPI_INTERRUPT		SPI_INTERRUPT_ENABLE
 
 #endif
