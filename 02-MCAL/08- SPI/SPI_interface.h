@@ -3,7 +3,7 @@
  * File name	: 	SPI_interface.h																			*
  * Author 		: 	Abdullah Mustafa																		*
  * Date			: 	19 SEP, 2020																			*
- * Version		: 	V1.0.0																					*
+ * Version		: 	v1.0																					*
  * Description	:																							*
  * Compiler		:	Eclipse IDE																				*
  * Target		:	STM32F103 Microcontroller																*
@@ -11,6 +11,47 @@
  * LOG			:	v1.0	:	Initial creation															*
  ***********************************************************************************************************/
 
+ /***************************************** SOURCE REVISION LOG *********************************************
+ *
+ *    Date			Version			Author			  Description 
+ *  19 SEP, 2020	  1.0		Abdullah Mustafa	Initial Release.
+ *
+ **********************************************************************************************************/
+
+/************************************************************************************************************
+ *	API Description
+ *			MSPI1_voidInit
+ *					<Function>				A function used to initiate the SPI peripheral to be operates
+ *											at this configurations
+ *												- 2 Directional lines (Full duplex)
+ *												- No CRC
+ *												- 8-bit frame formate
+ *            									- Transmit and receive
+ *            									- NSS controlled by SW
+ *            									- MSb Sent first
+ *            									- SPI enable
+ *            									- Baudrate at fclk/2
+ *            									- Master Node
+ *            									- Low Idle 
+ *            									- Write then Read
+ *            									- No interrupts
+ *            					return	 		void
+ *            					parameters		void
+ *            					Local Var		NONE	
+ *
+ * 			MSPI1_voidSendReceiveSynchronous
+ * 					<Function>				used to send and receive data using the polling mechanizm
+ * 											and waiting for the BUSY flag.
+ * 								return				void
+ * 								parameters			Copy_u8DataToTransmit, Copy_Pu8DataToReceive
+ * 								Local Var			NONE
+ * 			
+ * 			MSPI1_voidSendReceiveAsynchronous
+ * 					<Function>				used to send and receive data using the interrupt mechanizm.
+ * 								return				void
+ * 								parameters			Copy_u8DataToTransmit, (*Copy_voidCallBack)(void)
+ * 								Local Var			NO					
+ ***********************************************************************************************************/
 
 #ifndef	SPI_INTERFACE_H
 #define	SPI_INTERFACE_H
@@ -28,6 +69,30 @@
  * Clock Phase	  (Clock Phase is 1)	  Bit(0)	= 1;
  * 
  */
+/******************************************************************************
+* Configuration Constants
+*******************************************************************************/
+//SPI1 PINS
+#if SPI_1_AFIO_MAPPING == 0
+#define SPI_1_MOSI_PIN        PINA7
+#define SPI_1_MISO_PIN        PINA6
+#define SPI_1_CLK_PIN         PINA5
+#define SPI_1_NSS_PIN         PINA4
+#endif
+//SPI2 PINS
+#define SPI_2_MOSI_PIN        PINB15
+#define SPI_2_MISO_PIN        PINA14
+#define SPI_2_CLK_PIN         PINB13
+#define SPI_2_NSS_PIN         PINB12
+//SPI Pins after Mapping
+#if SPI_1_AFIO_MAPPING == 1
+#define SPI_1_MOSI_PIN        PINB5
+#define SPI_1_MISO_PIN        PINB4
+#define SPI_1_CLK_PIN         PINB3
+#define SPI_1_NSS_PIN         PINA15
+#endif
+
+
 void MSPI1_voidInit(void);
 void MSPI1_voidSendReceiveSynchronous(u8 Copy_u8DataToTransmit, u8 * Copy_Pu8DataToReceive);
 void MSPI1_voidSendReceiveAsynchronous(u8 Copy_u8DataToTransmit, void (*Copy_voidCallBack)(void));
